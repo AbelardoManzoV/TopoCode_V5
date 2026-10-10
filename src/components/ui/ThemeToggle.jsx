@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
   const isDark = theme === "dark";
 
   return (
@@ -12,7 +14,7 @@ export function ThemeToggle() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className="relative w-10 h-10 flex items-center justify-center rounded-full border border-topo-border bg-topo-surface text-topo-text hover:bg-topo-surface-soft transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-topo-blue"
-      aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+      aria-label={isDark ? t.a11y.toLight : t.a11y.toDark}
     >
       <motion.div
         initial={false}

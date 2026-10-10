@@ -2,15 +2,20 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>TopoCode | Agencia de Desarrollo de Software</title>
     <meta
       name="description"
       content="TopoCode es una mini agencia de desarrollo de software enfocada en negocios locales. Creamos páginas web, tiendas en línea, apps y sistemas a la medida."
     />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#2b303a" media="(prefers-color-scheme: dark)" />
     <script>
       (function () {
+        const ua = navigator.userAgent;
+        if (/iP(hone|ad|od)/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+          document.documentElement.classList.add("ios");
+        }
         const theme = localStorage.getItem("topocode-theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         if (theme === "dark" || (!theme && prefersDark)) {
@@ -26,6 +31,12 @@
       })();
     </script>
     <link rel="canonical" href="https://topocode.mx/" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

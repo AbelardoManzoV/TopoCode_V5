@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { MagneticButton } from "./ui/MagneticButton";
 import { useLanguage } from "../hooks/useLanguage";
-import topoCodeLogoLight from "../assets/topocode-logo.webp";
-import topoCodeLogoDark from "../assets/topocode-logo-dark.webp";
+import topoCodeLogoLight from "../assets/topocode-logo.png";
+import topoCodeLogoDark from "../assets/topocode-logo-dark.png";
 
 const socialLinks = [
   {

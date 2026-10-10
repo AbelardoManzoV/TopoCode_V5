@@ -5,6 +5,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// La barra de Safari iOS cambia el alto del viewport al hacer scroll; sin esto
+// ScrollTrigger recalcula todo en cada cambio y la página "salta".
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 export function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
 
@@ -25,15 +29,13 @@ export function SmoothScroll({ children }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
+    const tick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(tick);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
     };
   }, []);
 

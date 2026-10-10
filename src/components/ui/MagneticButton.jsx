@@ -6,7 +6,7 @@ export function MagneticButton({
   children,
   className,
   strength = 0.3,
-  as: Component = motion.button,
+  as: Component = motion.div,
   ...props
 }) {
   const reduce = useReducedMotion();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
 import { MagneticButton } from "./ui/MagneticButton";
@@ -11,9 +11,14 @@ import { ScrollTextReveal } from "./gsap/ScrollTextReveal";
 
 const icons = [Mail, Phone, MapPin];
 
+// FormSubmit: envía el formulario por correo sin backend propio.
+const CONTACT_EMAIL = "contacto@topocode.dev";
+const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+
 export function Contact() {
   const { t, language } = useLanguage();
-  const [submitted, setSubmitted] = useState(false);
+  // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
 
   const contactInfo = t.contact.contactInfo.map((item, index) => ({
     ...item,
@@ -21,10 +26,37 @@ export function Contact() {
     href: index === 0 ? `mailto:${item.value}` : "#",
   }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    if (status === "sending") return;
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    const projectType =
+      projectTypes.find((type) => type.key === data.projectType)?.label ?? data.projectType;
+    setStatus("sending");
+
+    try {
+      const res = await fetch(FORMSUBMIT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...data,
+          projectType,
+          language,
+          _subject: `Nuevo contacto desde topocode.dev: ${data.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || String(result.success) !== "true") throw new Error("formsubmit");
+      form.reset();
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("error");
+    }
   };
 
   const projectTypes = [
@@ -63,16 +95,25 @@ export function Contact() {
           <AnimatedSection key={`contact-form-${language}`} className="lg:col-span-3">
             <StaggerContainer key={`contact-form-stagger-${language}`} className="rounded-3xl border border-topo-border bg-topo-surface p-6 md:p-10 shadow-[0_40px_80px_rgba(0,0,0,0.25)]">
               <form className="space-y-5" onSubmit={handleSubmit}>
+                {/* Honeypot anti-bots: las personas no lo ven ni lo rellenan */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                />
                 <StaggerItem>
                   <div className="grid md:grid-cols-2 gap-5">
-                    <Input label={t.contact.form.name} type="text" placeholder={t.contact.form.namePlaceholder} required />
-                    <Input label={t.contact.form.email} type="email" placeholder={t.contact.form.emailPlaceholder} required />
+                    <Input label={t.contact.form.name} name="name" autoComplete="name" maxLength={100} type="text" placeholder={t.contact.form.namePlaceholder} required />
+                    <Input label={t.contact.form.email} name="email" autoComplete="email" maxLength={200} type="email" placeholder={t.contact.form.emailPlaceholder} required />
                   </div>
                 </StaggerItem>
                 <StaggerItem>
                   <div className="grid md:grid-cols-2 gap-5">
-                    <Input label={t.contact.form.phone} type="tel" placeholder={t.contact.form.phonePlaceholder} />
-                    <Select label={t.contact.form.projectType} required>
+                    <Input label={t.contact.form.phone} name="phone" autoComplete="tel" maxLength={40} type="tel" placeholder={t.contact.form.phonePlaceholder} />
+                    <Select label={t.contact.form.projectType} name="projectType" required>
                       <option value="">{t.contact.form.projectTypePlaceholder}</option>
                       {projectTypes.map((type) => (
                         <option key={type.key} value={type.key}>
@@ -85,6 +126,8 @@ export function Contact() {
                 <StaggerItem>
                   <Textarea
                     label={t.contact.form.message}
+                    name="message"
+                    maxLength={4000}
                     rows={4}
                     placeholder={t.contact.form.messagePlaceholder}
                     required
@@ -95,9 +138,15 @@ export function Contact() {
                     <Button
                       variant="form"
                       type="submit"
-                      className="flex items-center justify-center gap-2"
+                      disabled={status === "sending"}
+                      className="flex items-center justify-center gap-2 disabled:opacity-70"
                     >
-                      {submitted ? (
+                      {status === "sending" ? (
+                        <>
+                          <Loader2 size={18} className="animate-spin" />
+                          {t.contact.form.sending}
+                        </>
+                      ) : status === "success" ? (
                         <>
                           <CheckCircle size={18} />
                           {t.contact.form.submitted}
@@ -110,6 +159,9 @@ export function Contact() {
                       )}
                     </Button>
                   </MagneticButton>
+                  <p role="status" aria-live="polite" className="mt-3 min-h-[1.25rem] text-sm text-center text-red-500">
+                    {status === "error" ? t.contact.form.error : ""}
+                  </p>
                 </StaggerItem>
               </form>
             </StaggerContainer>

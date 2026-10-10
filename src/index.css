@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant ios (&:where(.ios, .ios *));
 
 /* Light theme (default) */
 :root {
@@ -26,11 +27,14 @@
   --color-ink-subtle: var(--topo-light);
   --color-border: var(--topo-border);
 
+  --hero-vignette: rgba(245, 245, 247, 0.85);
+
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Dark theme */
 .dark {
+  --hero-vignette: rgba(34, 39, 49, 0.8);
   --topo-black: #222731;
   --topo-blue: #6E87B7;
   --topo-blue-dark: #5F78A9;
@@ -74,6 +78,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--font-sans);
   background-color: var(--topo-bg);
   color: var(--topo-text);
@@ -149,4 +154,25 @@ body {
 /* Utility: text balance on headings */
 h1, h2, h3 {
   text-wrap: balance;
+}
+
+/* Hero background paths (CSS-driven, ver BackgroundPaths.jsx) */
+.path-flow {
+  stroke-dasharray: 0.45 0.55;
+  animation: path-flow 28s linear infinite;
+}
+
+.paths-pulse {
+  will-change: opacity;
+  animation: paths-pulse 10s ease-in-out infinite;
+}
+
+@keyframes path-flow {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes paths-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
 }

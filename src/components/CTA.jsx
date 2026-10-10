@@ -29,7 +29,8 @@ export function CTA() {
           x: ["-5%", "5%", "-5%"],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[700px] rounded-full bg-topo-blue blur-[160px] opacity-30"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] max-w-[1000px] aspect-[10/7] rounded-full opacity-30 pointer-events-none"
+        style={{ background: "radial-gradient(closest-side, var(--topo-blue), transparent)" }}
       />
       <motion.div
         animate={{
@@ -37,7 +38,8 @@ export function CTA() {
           opacity: [0.1, 0.2, 0.1],
         }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-topo-light blur-[120px]"
+        className="absolute top-1/3 right-0 sm:right-1/4 w-[70vw] max-w-[500px] aspect-square rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(closest-side, var(--topo-light), transparent)" }}
       />
 
       <div
@@ -57,7 +59,7 @@ export function CTA() {
           <WordReveal
             key={`cta-title-${language}`}
             as="h2"
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight leading-[1.02]"
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-topo-text dark:text-white tracking-tight leading-[1.02]"
             stagger={0.04}
             duration={0.6}
           >
