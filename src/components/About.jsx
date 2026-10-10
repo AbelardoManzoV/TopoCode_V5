@@ -100,7 +100,7 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.6 }}
-              className="mt-14 grid grid-cols-3 gap-6 pt-10 border-t border-topo-border"
+              className="mt-14 grid grid-cols-2 gap-6 pt-10 border-t border-topo-border"
             >
               {t.about.stats.map((stat) => (
                 <Counter

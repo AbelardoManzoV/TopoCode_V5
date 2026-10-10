@@ -7,8 +7,8 @@ import { ThemeToggle } from "./ui/ThemeToggle";
 import { LanguageToggle } from "./ui/LanguageToggle";
 import { useLanguage } from "../hooks/useLanguage";
 import { cn } from "../lib/utils";
-import topoCodeLogoLight from "../assets/topocode-logo.webp";
-import topoCodeLogoDark from "../assets/topocode-logo-dark.webp";
+import topoCodeLogoLight from "../assets/topocode-logo.png";
+import topoCodeLogoDark from "../assets/topocode-logo-dark.png";
 
 const getNavLinks = (t) => [
   { label: t.nav.home, href: "#inicio" },
@@ -36,9 +36,9 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-500",
         scrolled
-          ? "bg-topo-surface/80 dark:bg-topo-black/80 backdrop-blur-2xl border-b border-topo-border shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          ? "bg-topo-surface/80 dark:bg-topo-black/80 backdrop-blur-2xl ios:backdrop-blur-md border-b border-topo-border shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       )}
     >
@@ -87,7 +87,7 @@ export function Navbar() {
 
           <motion.button
             whileTap={{ scale: 0.9 }}
-            aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label={mobileOpen ? t.a11y.closeMenu : t.a11y.openMenu}
             className="md:hidden p-2 text-topo-light hover:text-white transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
@@ -103,7 +103,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden bg-topo-surface/95 backdrop-blur-2xl border-t border-topo-border overflow-hidden"
+            className="md:hidden bg-topo-surface/95 backdrop-blur-2xl ios:backdrop-blur-md border-t border-topo-border overflow-hidden"
           >
             <div className="px-4 py-6 space-y-3">
               <div className="flex items-center justify-between pb-4 border-b border-topo-border">
@@ -111,7 +111,7 @@ export function Navbar() {
                 <LanguageToggle />
               </div>
               <div className="flex items-center justify-between pb-4 border-b border-topo-border">
-                <span className="text-sm font-medium text-topo-gray">Tema</span>
+                <span className="text-sm font-medium text-topo-gray">{t.a11y.theme}</span>
                 <ThemeToggle />
               </div>
               {navLinks.map((link, index) => (

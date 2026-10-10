@@ -15,7 +15,6 @@ export const translations = {
         "Desarrollamos páginas web, tiendas en línea y apps para negocios locales que quieren crecer.",
       primaryCta: "Cotizar proyecto",
       secondaryCta: "Ver servicios",
-      socialProof: "10+ proyectos entregados en México",
       code: {
         project: "proyecto",
         name: "Tu negocio",
@@ -23,6 +22,7 @@ export const translations = {
         status: "creciendo",
         ready: "true",
       },
+      codeKeys: { name: "nombre", type: "tipo", status: "estado", ready: "listo" },
       stack: "Stack",
       stackValue: "React + Vite",
       delivery: "Entrega",
@@ -126,15 +126,46 @@ export const translations = {
       title: "Trabajos que hablan por nosotros",
       description:
         "Proyectos reales para negocios locales. Cada uno con su propio reto.",
-      featured: "Proyecto destacado",
-      category: "Landing + E-commerce",
-      client: "Cafetería local",
-      projectTitle: "Landing page + tienda en línea para cafetería",
-      projectDescription:
-        "Diseñamos y desarrollamos una experiencia digital completa: menú interactivo, pedidos online y panel de administración.",
+      viewSite: "Ver sitio",
       primaryCta: "Quiero algo similar",
-      secondaryCta: "Ver detalles",
-      tech: ["React", "Next.js", "Tailwind", "Stripe"],
+      projects: [
+        {
+          category: "Landing page",
+          title: "Sitio web corporativo",
+          description:
+            "Sitio de una sola página con galería en mosaico que se adapta a cualquier pantalla. Publicado y actualizado con cada cambio.",
+        },
+        {
+          category: "Tienda en línea",
+          title: "Plataforma de catálogo y pedidos",
+          description:
+            "Catálogo digital para tiendas que venden por redes sociales. El cliente arma su pedido con un toque y llega listo al WhatsApp de la tienda, con panel para administrar productos.",
+        },
+        {
+          category: "Sistema administrativo",
+          title: "Sistema de inventario, costos y punto de venta",
+          description:
+            "Inventario en almacén y punto de venta, recetas que calculan el costo real por pieza, caja con corte, compras a proveedores y un asistente de IA que registra movimientos con lenguaje natural.",
+        },
+        {
+          category: "Aplicación web",
+          title: "Sistema de gestión clínica",
+          description:
+            "Gestión de pacientes con ficha clínica, agenda y un semáforo que indica si cada paciente cumple los requisitos de un tratamiento antes de agendarlo.",
+        },
+        {
+          category: "Aplicación web",
+          title: "Plataforma de trazabilidad agrícola",
+          description:
+            "Sitio bilingüe para exportadores agrícolas, con registro de lotes, historial inmutable y código QR de trazabilidad para cada lote.",
+        },
+        {
+          category: "Punto de venta · Web e iOS",
+          title: "Sistema de punto de venta multiplataforma",
+          description:
+            "Punto de venta para retail con roles y permisos, disponible en web y en una app nativa para iPhone que comparten los mismos datos.",
+        },
+      ],
     },
     about: {
       title: "Un estudio joven con enfoque local",
@@ -144,7 +175,6 @@ export const translations = {
         "No vendemos paquetes prediseñados. Escuchamos, adaptamos y construimos lo que tu negocio realmente necesita.",
       available: "Disponibles para proyectos",
       stats: [
-        { value: 10, suffix: "+", label: "Proyectos entregados" },
         { value: 100, suffix: "%", label: "Clientes locales" },
         { value: 24, suffix: "/7", label: "Soporte disponible" },
       ],
@@ -180,9 +210,12 @@ export const translations = {
         messagePlaceholder: "Cuéntanos sobre tu proyecto...",
         submit: "Enviar mensaje",
         submitted: "Mensaje enviado",
+        sending: "Enviando…",
+        error:
+          "No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos a contacto@topocode.dev.",
       },
       contactInfo: [
-        { label: "Email", value: "contacto@topocode.mx" },
+        { label: "Email", value: "contacto@topocode.dev" },
         { label: "WhatsApp", value: "+52 ..." },
         { label: "Ubicación", value: "México" },
       ],
@@ -197,6 +230,13 @@ export const translations = {
       privacy: "Política de privacidad",
       terms: "Términos de uso",
       rights: "Todos los derechos reservados.",
+    },
+    a11y: {
+      theme: "Tema",
+      openMenu: "Abrir menú",
+      closeMenu: "Cerrar menú",
+      toLight: "Cambiar a modo claro",
+      toDark: "Cambiar a modo oscuro",
     },
     language: {
       toggle: "Cambiar idioma",
@@ -222,7 +262,6 @@ export const translations = {
         "We build websites, online stores, and apps for local businesses ready to grow.",
       primaryCta: "Get a quote",
       secondaryCta: "See services",
-      socialProof: "10+ projects delivered in Mexico",
       code: {
         project: "project",
         name: "Your business",
@@ -230,10 +269,11 @@ export const translations = {
         status: "growing",
         ready: "true",
       },
+      codeKeys: { name: "name", type: "type", status: "status", ready: "ready" },
       stack: "Stack",
       stackValue: "React + Vite",
       delivery: "Delivery",
-      deliveryValue: "2-4 weeks",
+      deliveryValue: "2–4 weeks",
     },
     techMarquee: {
       title: "Technologies",
@@ -273,7 +313,7 @@ export const translations = {
       ],
     },
     whyUs: {
-      title: "More than code, we build digital trust.",
+      title: "More than code: we build digital trust.",
       description:
         "Every design and development decision is made so your business feels secure and supported.",
       reasons: [
@@ -287,7 +327,7 @@ export const translations = {
         },
         {
           title: "Clear communication",
-          description: "We walk with you every step with updates and simple explanations.",
+          description: "We walk with you every step of the way, with updates and simple explanations.",
         },
         {
           title: "Local business focus",
@@ -299,12 +339,12 @@ export const translations = {
         },
         {
           title: "Support after delivery",
-          description: "We don't leave you alone: maintenance, tweaks, and ongoing improvements.",
+          description: "We don't leave you on your own: maintenance, tweaks, and ongoing improvements.",
         },
       ],
     },
     process: {
-      title: "From idea to reality in 4 steps",
+      title: "From idea to reality in four steps",
       description: "A clear process so you always know where we are.",
       steps: [
         {
@@ -325,32 +365,63 @@ export const translations = {
         {
           title: "We launch and support",
           description:
-            "We launch your product and stay with you for support and improvements.",
+            "We launch your product and stay by your side for ongoing support and improvements.",
         },
       ],
     },
     portfolio: {
-      title: "Work that speaks for us",
-      description: "Real projects for local businesses. Each with its own challenge.",
-      featured: "Featured project",
-      category: "Landing + E-commerce",
-      client: "Local coffee shop",
-      projectTitle: "Landing page + online store for a coffee shop",
-      projectDescription:
-        "We designed and developed a complete digital experience: interactive menu, online orders, and admin panel.",
+      title: "Work that speaks for itself",
+      description:
+        "Real projects for local businesses, each with its own challenge.",
+      viewSite: "View site",
       primaryCta: "I want something similar",
-      secondaryCta: "View details",
-      tech: ["React", "Next.js", "Tailwind", "Stripe"],
+      projects: [
+        {
+          category: "Landing page",
+          title: "Corporate website",
+          description:
+            "A one-page site with a mosaic gallery that adapts to any screen. Published and updated with every change.",
+        },
+        {
+          category: "Online store",
+          title: "Catalog and ordering platform",
+          description:
+            "A digital catalog for stores that sell through social media. Customers build an order with one tap and it arrives ready in the store's WhatsApp, with a panel to manage products.",
+        },
+        {
+          category: "Admin system",
+          title: "Inventory, costing, and point-of-sale system",
+          description:
+            "Inventory across a warehouse and a point of sale, recipes that calculate the real cost per piece, a cash register with end-of-day close, supplier purchases, and an AI assistant that logs entries from plain language.",
+        },
+        {
+          category: "Web app",
+          title: "Clinic management system",
+          description:
+            "Patient management with clinical records, scheduling, and a traffic light showing whether each patient meets a treatment's requirements before booking.",
+        },
+        {
+          category: "Web app",
+          title: "Agricultural traceability platform",
+          description:
+            "A bilingual site for agricultural exporters, with batch tracking, an immutable event history, and a traceability QR code for every batch.",
+        },
+        {
+          category: "Point of sale · Web & iOS",
+          title: "Cross-platform point-of-sale system",
+          description:
+            "A retail point of sale with roles and permissions, available on the web and as a native iPhone app that share the same data.",
+        },
+      ],
     },
     about: {
       title: "A young studio with a local focus",
       paragraph1:
-        "TopoCode is a development studio focused on helping local businesses make the digital leap. We combine design, code, and strategy to create simple, useful, and professional solutions.",
+        "TopoCode is a development studio focused on helping local businesses make the leap to digital. We combine design, code, and strategy to create simple, useful, and professional solutions.",
       paragraph2:
         "We don't sell pre-designed packages. We listen, adapt, and build what your business truly needs.",
       available: "Available for projects",
       stats: [
-        { value: 10, suffix: "+", label: "Projects delivered" },
         { value: 100, suffix: "%", label: "Local clients" },
         { value: 24, suffix: "/7", label: "Support available" },
       ],
@@ -386,14 +457,17 @@ export const translations = {
         messagePlaceholder: "Tell us about your project...",
         submit: "Send message",
         submitted: "Message sent",
+        sending: "Sending…",
+        error:
+          "We couldn't send your message. Please try again or email us at contacto@topocode.dev.",
       },
       contactInfo: [
-        { label: "Email", value: "contacto@topocode.mx" },
+        { label: "Email", value: "contacto@topocode.dev" },
         { label: "WhatsApp", value: "+52 ..." },
         { label: "Location", value: "Mexico" },
       ],
       response: {
-        title: "Fast response",
+        title: "Quick response",
         description:
           "We usually reply within 24 hours. If it's urgent, message us on WhatsApp.",
       },
@@ -403,6 +477,13 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Use",
       rights: "All rights reserved.",
+    },
+    a11y: {
+      theme: "Theme",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
+      toLight: "Switch to light mode",
+      toDark: "Switch to dark mode",
     },
     language: {
       toggle: "Switch language",

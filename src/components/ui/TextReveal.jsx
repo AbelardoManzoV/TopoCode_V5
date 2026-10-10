@@ -1,6 +1,12 @@
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
+const isIOS =
+  typeof document !== "undefined" &&
+  document.documentElement.classList.contains("ios");
+const hiddenWord = isIOS ? { y: "110%" } : { y: "110%", rotateX: -90 };
+const shownWord = isIOS ? { y: 0 } : { y: 0, rotateX: 0 };
+
 export function WordReveal({
   children,
   as: Component = "h1",
@@ -26,8 +32,8 @@ export function WordReveal({
         <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
           <motion.span
             className="inline-block"
-            initial={{ y: "110%", rotateX: -90 }}
-            animate={isInView ? { y: 0, rotateX: 0 } : { y: "110%", rotateX: -90 }}
+            initial={hiddenWord}
+            animate={isInView ? shownWord : hiddenWord}
             transition={{
               duration,
               delay: delay + i * stagger,

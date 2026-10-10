@@ -58,7 +58,7 @@ export function HorizontalScroll({ children, className }) {
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${className || ""}`}>
-      <div ref={trackRef} className="flex items-stretch h-screen">
+      <div ref={trackRef} className="flex items-stretch h-[100svh]">
         {children}
       </div>
     </div>

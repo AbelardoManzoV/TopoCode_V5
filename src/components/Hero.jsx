@@ -1,5 +1,12 @@
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { Button } from "./ui/Button";
 import { MagneticButton } from "./ui/MagneticButton";
 import { WordReveal } from "./ui/TextReveal";
@@ -10,7 +17,14 @@ import { ArrowDownRight } from "lucide-react";
 export function Hero() {
   const { t, language } = useLanguage();
   const containerRef = useRef(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  // El mouse vive en motion values: no re-renderiza el Hero en cada movimiento.
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const spotX = useTransform(mouseX, (v) => v * 2);
+  const spotY = useTransform(mouseY, (v) => v * 2);
+  const spotlight = useMotionTemplate`radial-gradient(700px circle at calc(50% + ${spotX}px) calc(50% + ${spotY}px), rgba(110,135,183,0.12), transparent 40%)`;
+  const tiltY = useSpring(useTransform(mouseX, (v) => -v * 0.08), { stiffness: 200, damping: 25 });
+  const tiltX = useSpring(useTransform(mouseY, (v) => v * 0.08), { stiffness: 200, damping: 25 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -23,10 +37,8 @@ export function Hero() {
   const handleMouseMove = (e) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    setMouse({
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
-      y: ((e.clientY - rect.top) / rect.height - 0.5) * 20,
-    });
+    mouseX.set(((e.clientX - rect.left) / rect.width - 0.5) * 20);
+    mouseY.set(((e.clientY - rect.top) / rect.height - 0.5) * 20);
   };
 
   return (
@@ -38,11 +50,9 @@ export function Hero() {
         className="relative w-full min-h-[100dvh] flex items-center overflow-hidden"
       >
         {/* Local cursor spotlight */}
-        <div
+        <motion.div
           className="pointer-events-none absolute inset-0 z-[2] hidden lg:block opacity-60"
-          style={{
-            background: `radial-gradient(700px circle at calc(50% + ${mouse.x * 2}px) calc(50% + ${mouse.y * 2}px), rgba(110,135,183,0.12), transparent 40%)`,
-          }}
+          style={{ background: spotlight }}
         />
 
         <motion.div
@@ -65,7 +75,7 @@ export function Hero() {
               <WordReveal
                 key={`title-${language}`}
                 as="h1"
-                className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.05]"
+                className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-topo-text dark:text-white leading-[1.05]"
                 delay={0.2}
                 stagger={0.08}
                 duration={0.7}
@@ -112,29 +122,6 @@ export function Hero() {
                   </Button>
                 </MagneticButton>
               </motion.div>
-
-              <motion.div
-                key={`social-${language}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.1 }}
-                className="mt-12 flex items-center gap-6 text-sm text-topo-gray"
-              >
-                <div className="flex -space-x-2">
-                  {[1, 2, 3].map((i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.2 + i * 0.1 }}
-                      className="w-8 h-8 rounded-full border-2 border-topo-black bg-topo-surface flex items-center justify-center text-xs font-medium text-topo-light"
-                    >
-                      {i === 1 ? "RP" : i === 2 ? "MA" : "JL"}
-                    </motion.div>
-                  ))}
-                </div>
-                <p>{t.hero.socialProof}</p>
-              </motion.div>
             </div>
 
             <motion.div
@@ -143,11 +130,10 @@ export function Hero() {
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="hidden lg:block relative"
-              style={{
-                transform: `perspective(1200px) rotateY(${-mouse.x * 0.08}deg) rotateX(${mouse.y * 0.08}deg)`,
-                transition: "transform 0.15s ease-out",
-              }}
             >
+              <motion.div
+                style={{ rotateY: tiltY, rotateX: tiltX, transformPerspective: 1200 }}
+              >
               <div className="relative rounded-2xl overflow-hidden border border-topo-border bg-topo-surface/90 backdrop-blur-sm shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center gap-2 px-5 py-4 border-b border-topo-border bg-topo-black/50">
                   <div className="w-3 h-3 rounded-full bg-red-400/80" />
@@ -161,7 +147,7 @@ export function Hero() {
                 <div className="p-6 font-mono text-sm leading-relaxed">
                   <div className="text-topo-gray">
                     <span className="text-topo-blue">const</span>{" "}
-                    <span className="text-white">{t.hero.code.project}</span>{" "}
+                    <span className="text-topo-text dark:text-white">{t.hero.code.project}</span>{" "}
                     <span className="text-topo-blue">=</span>{" "}
                     <span className="text-topo-blue">{"{"}</span>
                   </div>
@@ -171,7 +157,7 @@ export function Hero() {
                     transition={{ delay: 0.8 }}
                     className="pl-4 text-topo-light"
                   >
-                    nombre: <span className="text-green-400/90">&apos;{t.hero.code.name}&apos;</span>,
+                    {t.hero.codeKeys.name}: <span className="text-green-400/90">&apos;{t.hero.code.name}&apos;</span>,
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
@@ -179,7 +165,7 @@ export function Hero() {
                     transition={{ delay: 0.95 }}
                     className="pl-4 text-topo-light"
                   >
-                    tipo: <span className="text-green-400/90">&apos;{t.hero.code.type}&apos;</span>,
+                    {t.hero.codeKeys.type}: <span className="text-green-400/90">&apos;{t.hero.code.type}&apos;</span>,
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
@@ -187,7 +173,7 @@ export function Hero() {
                     transition={{ delay: 1.1 }}
                     className="pl-4 text-topo-light"
                   >
-                    estado: <span className="text-yellow-400/90">&apos;{t.hero.code.status}&apos;</span>,
+                    {t.hero.codeKeys.status}: <span className="text-yellow-400/90">&apos;{t.hero.code.status}&apos;</span>,
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
@@ -195,7 +181,7 @@ export function Hero() {
                     transition={{ delay: 1.25 }}
                     className="pl-4 text-topo-light"
                   >
-                    listo: <span className="text-topo-blue">{t.hero.code.ready}</span>
+                    {t.hero.codeKeys.ready}: <span className="text-topo-blue">{t.hero.code.ready}</span>
                   </motion.div>
                   <div className="text-topo-blue">{"}"}</div>
 
@@ -224,6 +210,7 @@ export function Hero() {
               >
                 <div className="text-xs text-topo-gray uppercase tracking-wider">{t.hero.delivery}</div>
                 <div className="text-sm font-semibold text-topo-light">{t.hero.deliveryValue}</div>
+              </motion.div>
               </motion.div>
             </motion.div>
           </div>
