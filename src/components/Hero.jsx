@@ -202,15 +202,6 @@ export function Hero() {
                 <div className="text-xs text-topo-gray uppercase tracking-wider">{t.hero.stack}</div>
                 <div className="text-sm font-semibold text-topo-light">{t.hero.stackValue}</div>
               </motion.div>
-
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -bottom-4 -left-8 bg-topo-surface border border-topo-border rounded-xl px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
-              >
-                <div className="text-xs text-topo-gray uppercase tracking-wider">{t.hero.delivery}</div>
-                <div className="text-sm font-semibold text-topo-light">{t.hero.deliveryValue}</div>
-              </motion.div>
               </motion.div>
             </motion.div>
           </div>
