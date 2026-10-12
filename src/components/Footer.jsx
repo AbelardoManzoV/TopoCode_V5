@@ -102,10 +102,10 @@ export function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-topo-gray/70">
           <p>© {new Date().getFullYear()} TopoCode. {t.footer.rights}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-topo-light transition-colors">
+            <a href="#privacidad" className="hover:text-topo-light transition-colors">
               {t.footer.privacy}
             </a>
-            <a href="#" className="hover:text-topo-light transition-colors">
+            <a href="#terminos" className="hover:text-topo-light transition-colors">
               {t.footer.terms}
             </a>
           </div>
