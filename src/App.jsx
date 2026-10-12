@@ -8,6 +8,7 @@ import { About } from "./components/About";
 import { CTA } from "./components/CTA";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { LegalModal } from "./components/LegalModal";
 import { TechMarquee } from "./components/TechMarquee";
 import { useLanguage } from "./hooks/useLanguage";
 
@@ -35,6 +36,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <LegalModal />
     </div>
   );
 }
