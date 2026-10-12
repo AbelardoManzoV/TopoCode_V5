@@ -3,7 +3,6 @@ import { motion, useInView } from "framer-motion";
 import { WordReveal } from "./ui/TextReveal";
 import { useLanguage } from "../hooks/useLanguage";
 import { AnimatedSection } from "./ui/AnimatedSection";
-import { ImageReveal } from "./gsap/ImageReveal";
 import { ScrollTextReveal } from "./gsap/ScrollTextReveal";
 
 function Counter({ value, suffix, label }) {
@@ -42,32 +41,8 @@ export function About() {
   return (
     <section id="nosotros" className="py-28 md:py-40 bg-topo-bg overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <AnimatedSection key={`about-image-${language}`} variant="fadeInLeft">
-            <ImageReveal
-              key={`about-imgreveal-${language}`}
-              src="https://picsum.photos/seed/topocode-team/900/900"
-              alt={t.about.title}
-              className="rounded-3xl border border-topo-border shadow-[0_40px_80px_rgba(0,0,0,0.12)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.35)] aspect-square"
-              direction="right"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-topo-text/40 dark:from-topo-black/60 via-transparent to-topo-blue/10 pointer-events-none" />
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6 }}
-                className="absolute bottom-6 left-6 right-6"
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-topo-black/70 backdrop-blur-sm border border-topo-border text-sm text-topo-light">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  {t.about.available}
-                </div>
-              </motion.div>
-            </ImageReveal>
-          </AnimatedSection>
-
-          <AnimatedSection key={`about-text-${language}`} variant="fadeInRight" className="lg:pl-8">
+        <div className="max-w-3xl">
+          <AnimatedSection key={`about-text-${language}`} variant="fadeInRight">
             <WordReveal
               key={`about-title-${language}`}
               as="h2"

@@ -25,8 +25,6 @@ export const translations = {
       codeKeys: { name: "nombre", type: "tipo", status: "estado", ready: "listo" },
       stack: "Stack",
       stackValue: "React + Vite",
-      delivery: "Entrega",
-      deliveryValue: "2-4 semanas",
     },
     techMarquee: {
       title: "Tecnologías",
@@ -272,8 +270,6 @@ export const translations = {
       codeKeys: { name: "name", type: "type", status: "status", ready: "ready" },
       stack: "Stack",
       stackValue: "React + Vite",
-      delivery: "Delivery",
-      deliveryValue: "2–4 weeks",
     },
     techMarquee: {
       title: "Technologies",
