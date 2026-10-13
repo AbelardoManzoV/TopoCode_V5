@@ -7,6 +7,7 @@ import { ThemeToggle } from "./ui/ThemeToggle";
 import { LanguageToggle } from "./ui/LanguageToggle";
 import { useLanguage } from "../hooks/useLanguage";
 import { cn } from "../lib/utils";
+import { scrollToHash } from "../lib/scroll";
 import topoCodeLogoLight from "../assets/topocode-logo.png";
 import topoCodeLogoDark from "../assets/topocode-logo-dark.png";
 
@@ -29,6 +30,13 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleMobileNav = (e, href) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    // Espera a que el menú empiece a cerrarse para no pelear con su animación de alto.
+    requestAnimationFrame(() => scrollToHash(href));
+  };
 
   return (
     <motion.header
@@ -118,7 +126,7 @@ export function Navbar() {
                 <motion.a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleMobileNav(e, link.href)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -132,7 +140,7 @@ export function Navbar() {
                   variant="primary"
                   as="a"
                   href="#contacto"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleMobileNav(e, "#contacto")}
                   className="w-full"
                 >
                   {t.nav.cta}
