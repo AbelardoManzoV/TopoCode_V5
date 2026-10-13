@@ -214,7 +214,7 @@ export const translations = {
       },
       contactInfo: [
         { label: "Email", value: "contacto@topocode.dev" },
-        { label: "WhatsApp", value: "+52 ..." },
+        { label: "WhatsApp", value: "+52 322 156 5064" },
         { label: "Ubicación", value: "México" },
       ],
       response: {
@@ -459,7 +459,7 @@ export const translations = {
       },
       contactInfo: [
         { label: "Email", value: "contacto@topocode.dev" },
-        { label: "WhatsApp", value: "+52 ..." },
+        { label: "WhatsApp", value: "+52 322 156 5064" },
         { label: "Location", value: "Mexico" },
       ],
       response: {

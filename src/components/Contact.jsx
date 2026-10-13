@@ -23,7 +23,12 @@ export function Contact() {
   const contactInfo = t.contact.contactInfo.map((item, index) => ({
     ...item,
     icon: icons[index],
-    href: index === 0 ? `mailto:${item.value}` : "#",
+    href:
+      index === 0
+        ? `mailto:${item.value}`
+        : index === 1
+          ? `https://wa.me/${item.value.replace(/\D/g, "")}`
+          : undefined,
   }));
 
   const handleSubmit = async (e) => {
@@ -173,6 +178,8 @@ export function Contact() {
                 <motion.a
                   key={item.label}
                   href={item.href}
+                  target={item.href?.startsWith("https") ? "_blank" : undefined}
+                  rel={item.href?.startsWith("https") ? "noopener noreferrer" : undefined}
                   whileHover={{ x: 8 }}
                   transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="group flex items-start gap-4 p-5 rounded-2xl border border-topo-border bg-topo-surface/50 hover:border-topo-blue/50 hover:bg-topo-surface transition-all duration-300 shadow-lg shadow-black/10"
